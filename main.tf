@@ -24,6 +24,7 @@ module "apigee" {
   apigee_environments     = var.apigee_environments
   apigee_vpc_id           = module.vpc.apigee_vpc
   apigee_peering_ranges   = module.vpc.apigee_peering_ranges
+  support_ranges          = var.support_ranges
 
   depends_on = [module.gcp_apis]
 }

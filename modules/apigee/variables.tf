@@ -50,3 +50,9 @@ variable "apigee_peering_ranges" {
     cidr_range = string
   }))
 }
+
+variable "support_ranges" {
+  type = map(object({
+    support_range = string
+  }))
+}

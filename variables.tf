@@ -29,3 +29,9 @@ variable "apigee_cmek_runtimedb" {
   type = bool
   default = false
 }
+
+variable "support_ranges" {
+  type = map(object({
+    support_range = string
+  }))
+}
