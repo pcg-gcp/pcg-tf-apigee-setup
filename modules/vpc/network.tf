@@ -24,8 +24,7 @@ resource "google_compute_global_address" "apigee_range" {
 }
 
 resource "google_service_networking_connection" "apigee_vpc_connection" {
-  for_each                = local.apigee_envs
   network                 = google_compute_network.apigee_network.id
   service                 = "servicenetworking.googleapis.com"
-  reserved_peering_ranges = [google_compute_global_address.apigee_range[each.key].name]
+  reserved_peering_ranges = [ for range in google_compute_global_address.apigee_range : range.name ]
 }
