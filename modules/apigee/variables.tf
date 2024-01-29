@@ -9,34 +9,39 @@ variable "gcp_target_region" {
 
 variable "apigee_analytics_region" {
   type    = string
-  default = "europe-west3"
+  default = "europe-west1"
 }
 
 variable "apigee_org_name" {
   type = string
 }
 
+variable "apigee_org_retention" {
+  type    = string
+  default = "MINIMUM"
+}
+
 variable "apigee_environments" {
   type = list(object({
     name       = string
     cidr_range = string
-    hostnames = list(string)
-    env_type = optional(string, "COMPREHENSIVE")
+    hostnames  = list(string)
+    env_type   = optional(string, "COMPREHENSIVE")
   }))
 }
 
 variable "apigee_billing_type" {
   type    = string
-  default = "PAYG"
+  default = "SUBSCRIPTION"
 }
 
 variable "apigee_cmek_runtimedb" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "apigee_runtimedb_kms_key_id" {
-  type = string
+  type    = string
   default = ""
 }
 
@@ -46,7 +51,7 @@ variable "apigee_vpc_id" {
 
 variable "apigee_peering_ranges" {
   type = map(object({
-    name = string
+    name       = string
     cidr_range = string
   }))
 }

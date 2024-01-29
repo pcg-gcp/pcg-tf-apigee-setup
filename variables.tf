@@ -16,17 +16,22 @@ variable "apigee_org_name" {
   type = string
 }
 
+variable "apigee_org_retention" {
+  type    = string
+  default = "MINIMUM"
+}
+
 variable "apigee_environments" {
   type = list(object({
-    name = string
+    name       = string
     cidr_range = string
-    hostnames = list(string)
-    env_type = optional(string, "COMPREHENSIVE")
+    hostnames  = list(string)
+    env_type   = optional(string, "COMPREHENSIVE")
   }))
 }
 
 variable "apigee_cmek_runtimedb" {
-  type = bool
+  type    = bool
   default = false
 }
 
