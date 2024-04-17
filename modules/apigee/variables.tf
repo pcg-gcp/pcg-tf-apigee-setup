@@ -48,16 +48,3 @@ variable "apigee_runtimedb_kms_key_id" {
 variable "apigee_vpc_id" {
   type = string
 }
-
-variable "apigee_peering_ranges" {
-  type = map(object({
-    name       = string
-    cidr_range = string
-  }))
-}
-
-variable "support_ranges" {
-  type = map(object({
-    support_range = string
-  }))
-}

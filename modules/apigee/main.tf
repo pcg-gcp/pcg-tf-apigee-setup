@@ -15,12 +15,12 @@ resource "google_apigee_organization" "apigee_org" {
 
 resource "google_apigee_instance" "apigee_instance" {
 
-  for_each             = var.apigee_peering_ranges
-  name                 = "${each.key}-instance"
+  for_each             = local.apigee_envs
+  name                 = "${each.key}-apigee-instance"
   location             = var.gcp_target_region
   org_id               = google_apigee_organization.apigee_org.id
   consumer_accept_list = [var.gcp_project_id]
-  ip_range             = "${each.value.cidr_range}/22,${var.support_ranges[each.key].support_range}"
+  ip_range             = each.value.cidr_range
 
 }
 
@@ -29,7 +29,7 @@ resource "google_apigee_environment" "apigee_env" {
   for_each     = local.apigee_envs
   name         = each.key
   display_name = title(each.key)
-  #type         = each.value.env_type
+  type         = each.value.env_type
   org_id       = google_apigee_organization.apigee_org.id
 }
 

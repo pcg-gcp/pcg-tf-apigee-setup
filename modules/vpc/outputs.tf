@@ -2,8 +2,13 @@ output "apigee_vpc" {
   value = google_compute_network.apigee_network.id
 }
 
-output "apigee_peering_ranges" {
-  value = {
-    for range in google_compute_global_address.apigee_range : split("-", range.name)[0] => { name = range.name, cidr_range = range.address }
-  }
+output "apigee_peering_range" {
+  value = google_compute_global_address.apigee_ip_range
+}
+
+output "apigee_vpc_self_link" {
+  value = google_compute_network.apigee_network.self_link
+}
+output "apigge_subnet_self_link" {
+  value = google_compute_subnetwork.apigee_subnet.self_link
 }

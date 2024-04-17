@@ -6,10 +6,12 @@ module "gcp_apis" {
 module "vpc" {
   source = "./modules/vpc"
 
-  gcp_project_id            = var.gcp_project_id
-  vpc_name                  = "apigee"
-  apigee_environments       = var.apigee_environments
-  apigee_service_attachment = module.apigee.apigee_service_attachment
+  gcp_project_id             = var.gcp_project_id
+  vpc_name                   = "apigee"
+  apigee_environments        = var.apigee_environments
+  apigee_service_attachment  = module.apigee.apigee_service_attachment
+  apigee_subnet              = "172.16.0.0/16"
+  apigee_troubleshoot_subnet = "192.168.100.0/28"
 
   depends_on = [module.gcp_apis]
 }
@@ -23,8 +25,7 @@ module "apigee" {
   apigee_analytics_region = var.apigee_analytics_region
   apigee_environments     = var.apigee_environments
   apigee_vpc_id           = module.vpc.apigee_vpc
-  apigee_peering_ranges   = module.vpc.apigee_peering_ranges
-  support_ranges          = var.support_ranges
+  apigee_billing_type     = "PAYG"
 
   depends_on = [module.gcp_apis]
 }

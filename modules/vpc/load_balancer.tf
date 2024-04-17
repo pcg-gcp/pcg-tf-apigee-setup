@@ -6,7 +6,7 @@ resource "google_compute_region_network_endpoint_group" "apigee_neg" {
   name = "${each.key}-apigee-neg"
 
   network               = google_compute_network.apigee_network.id
-  subnetwork            = google_compute_subnetwork.apigee_subnetwork[each.key].id
+  subnetwork            = google_compute_subnetwork.apigee_subnet.id
   network_endpoint_type = "PRIVATE_SERVICE_CONNECT"
   psc_target_service    = each.value
   region                = var.gcp_target_region

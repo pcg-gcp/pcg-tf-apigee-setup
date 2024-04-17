@@ -8,8 +8,3 @@ apigee_environments = [{
   cidr_range = "10.0.0.0/24"
   hostnames  = ["poc.apigee.trygoo.gl"]
 }]
-support_ranges = {
-  "dev" = {
-    support_range = "192.168.0.0/28"
-  }
-}
