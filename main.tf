@@ -29,3 +29,19 @@ module "apigee" {
 
   depends_on = [module.gcp_apis]
 }
+
+module "psc_gke_connection" {
+  source = "./modules/psc_gke_connection"
+
+  gke_cluster_vpc         = "sandbox-network"
+  psc_subnet_cidr_range   = "100.250.0.0/24"
+  gcp_project_id          = "cw-marius-sandbox"
+  apigee_vpc_self_link    = module.vpc.apigee_vpc_self_link
+  apigee_subnet_self_link = module.vpc.apigge_subnet_self_link
+
+}
+
+module "dev_psc_connection" {
+  source = "./modules/apigee_psc_endpoint"
+  apigee_project_id = 
+}

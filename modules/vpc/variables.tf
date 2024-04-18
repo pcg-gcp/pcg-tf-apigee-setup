@@ -12,20 +12,28 @@ variable "vpc_name" {
 }
 
 variable "apigee_subnet" {
-  type = string
+  type    = string
   default = "172.16.0.0/16"
 }
 
 variable "apigee_troubleshoot_subnet" {
-  type = string
+  type    = string
   default = "192.168.100.0/28"
+}
+
+variable "apigee_peering_range" {
+  type = string
+}
+
+variable "apigee_management_range" {
+  type = string
 }
 
 variable "apigee_environments" {
   type = list(object({
-    name = string
+    name       = string
     cidr_range = string
-    hostnames = list(string)
+    hostnames  = list(string)
   }))
 }
 
