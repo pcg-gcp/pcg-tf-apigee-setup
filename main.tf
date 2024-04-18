@@ -41,3 +41,4 @@ module "producer_service" {
   container_ports        = [9376, 8080]
 
 }
+
