@@ -40,3 +40,12 @@ variable "support_ranges" {
     support_range = string
   }))
 }
+variable "producer_gcp_project_id" {
+  type = string
+  default = "pcg-fels-poc-sandbox" //project in which producer projects run
+}
+
+variable "producer_gcp_region" {
+  type    = string
+  default = "europe-west3"
+}

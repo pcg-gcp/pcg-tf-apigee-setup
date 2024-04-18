@@ -28,3 +28,16 @@ module "apigee" {
 
   depends_on = [module.gcp_apis]
 }
+
+module "producer_service" {
+
+  source = "./modules/producer_services"
+  providers = {
+    google = google.producer_service
+  }
+  producer_gcp_project_id = var.producer_gcp_project_id //project in which producer projects run
+  producer_gcp_region     = var.producer_gcp_region
+  gke_cidr_range         = "10.0.0.0/22"
+  container_ports        = [9376, 8080]
+
+}
