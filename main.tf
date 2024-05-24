@@ -7,11 +7,11 @@ module "vpc" {
   source = "./modules/vpc"
 
   gcp_project_id             = var.gcp_project_id
+  gcp_target_region = var.gcp_target_region
   vpc_name                   = "apigee"
   apigee_environments        = var.apigee_environments
-  apigee_service_attachment  = module.apigee.apigee_service_attachment
-  apigee_subnet              = "172.16.0.0/16"
-  apigee_troubleshoot_subnet = "192.168.100.0/28"
+  apigee_management_range = "192.168.250.0"
+  apigee_peering_range    = "172.16.0.0"
 
   depends_on = [module.gcp_apis]
 }
@@ -25,23 +25,39 @@ module "apigee" {
   apigee_analytics_region = var.apigee_analytics_region
   apigee_environments     = var.apigee_environments
   apigee_vpc_id           = module.vpc.apigee_vpc
-  apigee_billing_type     = "PAYG"
+  apigee_billing_type     = "PAYG" # ?? test ob abo das richtige für uns ist
 
   depends_on = [module.gcp_apis]
 }
 
-module "psc_gke_connection" {
-  source = "./modules/psc_gke_connection"
+module "load_balancer" {
 
-  gke_cluster_vpc         = "sandbox-network"
-  psc_subnet_cidr_range   = "100.250.0.0/24"
-  gcp_project_id          = "cw-marius-sandbox"
-  apigee_vpc_self_link    = module.vpc.apigee_vpc_self_link
-  apigee_subnet_self_link = module.vpc.apigge_subnet_self_link
+  source = "./modules/load_balancer"
+
+  apigee_service_attachment = module.apigee.apigee_service_attachment
+  apigee_network_id         = module.vpc.apigee_vpc
+  apigge_subnet_id          = module.vpc.apigee_subnet
+  apigee_environments       = var.apigee_environments
 
 }
 
-module "dev_psc_connection" {
+/* module "psc_endpoint_apigee" {
+
+  providers = {
+    google-beta.fels-platform = google-beta.fels-platform
+  }
   source = "./modules/apigee_psc_endpoint"
-  apigee_project_id = 
-}
+
+  apigee_project_id             = var.gcp_project_id
+  apigee_org_id                 = module.apigee.apigee_org_id
+  apigee_instance_region        = var.gcp_target_region
+  apigee_endpoint_attachment_id = "gke-cluster-test"
+  apigee_network_id             = module.vpc.apigee_vpc
+  dns_name                      = "fels-test.local."
+  dns_records                   = ["*"]
+  psc_attachment_network        = "vpc-network-93a6487a02"
+  psc_subnet_cidr_range         = "10.250.0.0/28"
+  psc_attachment_target         = "europe-west3/backendServices/a9116abd4a6cf4dd9adccd852a96b617"
+  psc_attachment_project        = "fels-test"
+  psc_attachment_target_region  = "europe-west3"
+} */

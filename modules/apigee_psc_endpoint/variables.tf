@@ -16,6 +16,11 @@ variable "apigee_instance_region" {
   type = string
 }
 
+variable "apigee_network_id" {
+  type = string
+  description = "ID of the VPC with which the Apigee organization is peered"
+}
+
 variable "psc_attachment_network" {
   type        = string
   description = "Id of the VPC where the target services is located"
@@ -44,4 +49,15 @@ variable "psc_attachment_target_region" {
 variable "psc_attachment_target" {
   type        = string
   description = "Forwarding rule of the LB that should be reachable over PSC. Value is retrieveable via the following command `gcloud compute forwarding-rules list`"
+}
+
+variable "dns_name" {
+  type = string
+  description = "Name of the internal DNS zone under which the services behind PSC should be reachable"
+}
+
+variable "dns_records" {
+  type = list(string)
+  default = ["*"]
+  description = "The DNS record under which Apigee can reach the ingress behind PSC"
 }

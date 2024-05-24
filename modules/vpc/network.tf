@@ -10,13 +10,6 @@ resource "google_compute_subnetwork" "apigee_subnet" {
   ip_cidr_range = var.apigee_subnet
 }
 
-/* resource "google_compute_subnetwork" "apigee_troubleshoot_subnet" {
-  name          = "apigee-troubleshoot-subnet"
-  network       = google_compute_network.apigee_network.id
-  ip_cidr_range = var.apigee_troubleshoot_subnet
-
-} */
-
 resource "google_compute_global_address" "apigee_ip_range" {
 
   name          = "apigee-peering-range"
