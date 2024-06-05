@@ -19,7 +19,7 @@ variable "vpc_name" {
 
 variable "apigee_subnet" {
   type    = string
-  default = "172.16.0.0/16"
+  default = "10.10.0.0/16"
 }
 
 variable "apigee_peering_range" {

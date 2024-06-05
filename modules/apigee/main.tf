@@ -29,7 +29,7 @@ resource "google_apigee_environment" "apigee_env" {
   for_each     = local.apigee_envs
   name         = each.key
   display_name = title(each.key)
-  type         = each.value.env_type
+  type         = var.apigee_billing_type == "PAYG" ? each.value.env_type : null
   org_id       = google_apigee_organization.apigee_org.id
 }
 

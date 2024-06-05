@@ -8,6 +8,7 @@ resource "google_compute_subnetwork" "apigee_subnet" {
   name          = "apigee-subnet"
   network       = google_compute_network.apigee_network.id
   ip_cidr_range = var.apigee_subnet
+  region        = var.gcp_target_region
 }
 
 resource "google_compute_global_address" "apigee_ip_range" {
@@ -25,7 +26,7 @@ resource "google_compute_global_address" "apigee_managed_range" {
   name          = "apigee-managed-range"
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
-  address       = var.apigee_management_range  #"192.168.250.0"
+  address       = var.apigee_management_range #"192.168.250.0"
   prefix_length = 28
   network       = google_compute_network.apigee_network.id
 }

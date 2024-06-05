@@ -1,6 +1,6 @@
 variable "gcp_target_region" {
   type    = string
-  default = "europe-west3"
+  default = "europe-west1"
 }
 
 
