@@ -7,12 +7,12 @@ apigee_environments = [{
   name       = "dev"
   cidr_range = "172.16.0.0/22"
   hostnames  = ["dev.apigee.trygoo.gl"]
-  env_type = "COMPREHENSIVE"
+  #env_type = "COMPREHENSIVE"
 },
-{
+/* {
   name       = "prod"
-  cidr_range = "172.16.10.0/22"
+  cidr_range = "172.16.8.0/22"
   hostnames  = ["prod.apigee.trygoo.gl"]
-  env_type = "COMPREHENSIVE"
-}
+  #env_type = "COMPREHENSIVE"
+} */
 ]

@@ -6,10 +6,10 @@ module "gcp_apis" {
 module "vpc" {
   source = "./modules/vpc"
 
-  gcp_project_id             = var.gcp_project_id
-  gcp_target_region = var.gcp_target_region
-  vpc_name                   = "apigee"
-  apigee_environments        = var.apigee_environments
+  gcp_project_id          = var.gcp_project_id
+  gcp_target_region       = var.gcp_target_region
+  vpc_name                = "apigee"
+  apigee_environments     = var.apigee_environments
   apigee_management_range = "192.168.250.0"
   apigee_peering_range    = "172.16.0.0"
 
@@ -25,7 +25,7 @@ module "apigee" {
   apigee_analytics_region = var.apigee_analytics_region
   apigee_environments     = var.apigee_environments
   apigee_vpc_id           = module.vpc.apigee_vpc
-  apigee_billing_type     = "PAYG" # ?? test ob abo das richtige für uns ist
+  apigee_billing_type     = "SUBSCRIPTION"
 
   depends_on = [module.gcp_apis]
 }
@@ -41,6 +41,12 @@ module "load_balancer" {
 
 }
 
+module "dns" {
+  source = "./modules/dns"
+
+  dns_records = ["dev", "prod"]
+
+}
 /* module "psc_endpoint_apigee" {
 
   providers = {
