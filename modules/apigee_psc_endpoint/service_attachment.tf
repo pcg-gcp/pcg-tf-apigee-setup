@@ -13,14 +13,32 @@ resource "google_compute_service_attachment" "psc_service_attachment" {
 
   name                  = "apigee-psc-attachment"
   region                = var.psc_attachment_target_region
-  connection_preference = "ACCEPT_MANUAL"
-  consumer_accept_lists {
+  connection_preference = "ACCEPT_AUTOMATIC"
+  /* consumer_accept_lists {
     project_id_or_num = var.apigee_project_id
     connection_limit = 10
-  }
+  } */
   enable_proxy_protocol = true
   nat_subnets = [google_compute_subnetwork.psc_subnet.id]
 
   target_service = var.psc_attachment_target 
+  project = var.psc_attachment_project
+
+  lifecycle {
+    ignore_changes = [target_service]
+  }
+}
+
+resource "google_compute_firewall" "allow_psc_traffic" {
+
+  name          = "apigee-allow-psc-traffic"
+  network       = var.psc_attachment_network
+  source_ranges = [var.psc_subnet_cidr_range]
+  direction     = "INGRESS"
+  allow {
+    ports    = [80]
+    protocol = "TCP"
+  }
+
   project = var.psc_attachment_project
 }

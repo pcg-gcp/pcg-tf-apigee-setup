@@ -23,10 +23,20 @@ variable "apigee_org_retention" {
 
 variable "apigee_environments" {
   type = list(object({
-    name       = string
+    name               = string
+    description        = optional(string)
+    hostnames          = list(string)
+    api_proxy_type     = optional(string)
+    env_type           = optional(string, "COMPREHENSIVE")
+    attached_instances = list(string)
+  }))
+}
+
+variable "apigee_instances" {
+  type = list(object({
+    name       = optional(string)
+    location   = string
     cidr_range = string
-    hostnames  = list(string)
-    env_type   = optional(string, "COMPREHENSIVE")
   }))
 }
 

@@ -14,7 +14,7 @@ resource "google_compute_region_network_endpoint_group" "apigee_neg" {
 
 resource "google_compute_global_address" "apigee_external_ip" {
 
-  for_each = var.apigee_service_attachment
+  for_each = local.apigee_envs
   name     = "${each.key}-apigee-ip"
 }
 
@@ -51,21 +51,21 @@ resource "google_compute_managed_ssl_certificate" "apigee_cert" {
 
 resource "google_compute_target_https_proxy" "apigee_https_proxy" {
 
-  for_each = local.apigee_envs
+  for_each = local.apigee_instance_envs
 
   name             = "${each.key}-apigee-proxy"
-  url_map          = google_compute_url_map.url_map[each.key].id
-  ssl_certificates = [google_compute_managed_ssl_certificate.apigee_cert[each.key].id]
+  url_map          = google_compute_url_map.url_map[each.value.instance].id
+  ssl_certificates = [google_compute_managed_ssl_certificate.apigee_cert[each.value.env].id]
 }
 
 resource "google_compute_global_forwarding_rule" "apigee_fwd" {
 
-  for_each = local.apigee_envs
+  for_each = local.apigee_instance_envs
 
   name                  = "${each.key}-apigee-fwd"
   ip_protocol           = "TCP"
   load_balancing_scheme = "EXTERNAL_MANAGED"
   port_range            = "443"
   target                = google_compute_target_https_proxy.apigee_https_proxy[each.key].id
-  ip_address            = google_compute_global_address.apigee_external_ip[each.key].id
+  ip_address            = google_compute_global_address.apigee_external_ip[each.value.env].id
 }

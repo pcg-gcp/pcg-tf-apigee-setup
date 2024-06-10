@@ -32,8 +32,11 @@ variable "apigee_management_range" {
 
 variable "apigee_environments" {
   type = list(object({
-    name       = string
-    cidr_range = string
-    hostnames  = list(string)
+    name               = string
+    description        = optional(string)
+    hostnames          = list(string)
+    api_proxy_type     = optional(string)
+    env_type           = optional(string, "COMPREHENSIVE")
+    attached_instances = list(string)
   }))
 }

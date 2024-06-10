@@ -23,3 +23,15 @@ resource "google_dns_record_set" "psc_dns_record" {
   managed_zone = google_dns_managed_zone.internal_zone.name
   rrdatas      = [google_apigee_endpoint_attachment.apigee_endpoint_attachment.host]
 }
+
+# https://cloud.google.com/vpc/docs/configure-private-services-access#gcloud_6
+# necessary that Apigee can access the private DNS zones
+resource "google_service_networking_peered_dns_domain" "apigee_peered_internal_zone" {
+
+  provider = google-beta
+  
+  name       = "apigee-${replace(trimsuffix(var.dns_name, "."), ".", "-")}-int-zone"
+  network    = "apigee" #var.apigee_network_id
+  dns_suffix = var.dns_name
+  service    = "servicenetworking.googleapis.com"
+}

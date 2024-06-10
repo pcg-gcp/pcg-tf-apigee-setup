@@ -22,6 +22,7 @@ module "apigee" {
   gcp_project_id          = var.gcp_project_id
   gcp_target_region       = var.gcp_target_region
   apigee_org_name         = var.apigee_org_name
+  apigee_instances        = var.apigee_instances
   apigee_analytics_region = var.apigee_analytics_region
   apigee_environments     = var.apigee_environments
   apigee_vpc_id           = module.vpc.apigee_vpc
@@ -43,15 +44,12 @@ module "load_balancer" {
 
 module "dns" {
   source = "./modules/dns"
-
-  dns_records = ["dev", "prod"]
+  apigee_dns_records = module.load_balancer.apigee_lb_ips
 
 }
-/* module "psc_endpoint_apigee" {
 
-  providers = {
-    google-beta.fels-platform = google-beta.fels-platform
-  }
+module "psc_endpoint_apigee" {
+
   source = "./modules/apigee_psc_endpoint"
 
   apigee_project_id             = var.gcp_project_id
@@ -59,11 +57,11 @@ module "dns" {
   apigee_instance_region        = var.gcp_target_region
   apigee_endpoint_attachment_id = "gke-cluster-test"
   apigee_network_id             = module.vpc.apigee_vpc
-  dns_name                      = "fels-test.local."
+  dns_name                      = "marius.de."
   dns_records                   = ["*"]
-  psc_attachment_network        = "vpc-network-93a6487a02"
+  psc_attachment_network        = "sandbox-network"
   psc_subnet_cidr_range         = "10.250.0.0/28"
-  psc_attachment_target         = "europe-west3/backendServices/a9116abd4a6cf4dd9adccd852a96b617"
-  psc_attachment_project        = "fels-test"
-  psc_attachment_target_region  = "europe-west3"
-} */
+  psc_attachment_target         = "europe-west1/backendServices/a1a2e4149c4f14a59823f0fcc387d15f"
+  psc_attachment_project        = "cw-marius-sandbox"
+  psc_attachment_target_region  = "europe-west1"
+}

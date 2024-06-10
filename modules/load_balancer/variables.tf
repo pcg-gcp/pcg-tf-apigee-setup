@@ -7,8 +7,8 @@ variable "gcp_target_region" {
 variable "apigee_environments" {
   type = list(object({
     name       = string
-    cidr_range = string
     hostnames  = list(string)
+    attached_instances = list(string)
   }))
 }
 

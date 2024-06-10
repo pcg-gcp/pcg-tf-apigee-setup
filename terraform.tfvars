@@ -3,16 +3,22 @@ gcp_target_region = "europe-west1"
 apigee_org_name   = "pcg-apigee-poc"
 
 apigee_analytics_region = "europe-west1"
-apigee_environments = [{
-  name       = "dev"
+
+apigee_instances = [{
+  location   = "europe-west1"
   cidr_range = "172.16.0.0/22"
-  hostnames  = ["dev.apigee.trygoo.gl"]
-  #env_type = "COMPREHENSIVE"
-},
-/* {
-  name       = "prod"
-  cidr_range = "172.16.8.0/22"
-  hostnames  = ["prod.apigee.trygoo.gl"]
-  #env_type = "COMPREHENSIVE"
-} */
+}]
+
+apigee_environments = [{
+  name               = "dev"
+  hostnames          = ["dev.apigee.trygoo.gl"]
+  env_type           = "COMPREHENSIVE"
+  attached_instances = ["europe-west1-instance"]
+  },
+  {
+    name               = "prod"
+    hostnames          = ["prod.apigee.trygoo.gl"]
+    attached_instances = ["europe-west1-instance"]
+    #env_type = "COMPREHENSIVE"
+  }
 ]
