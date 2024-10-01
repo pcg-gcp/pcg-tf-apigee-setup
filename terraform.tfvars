@@ -9,16 +9,25 @@ apigee_instances = [{
   cidr_range = "172.16.0.0/22"
 }]
 
-apigee_environments = [{
-  name               = "dev"
-  hostnames          = ["dev.apigee.trygoo.gl"]
-  env_type           = "COMPREHENSIVE"
-  attached_instances = ["europe-west1-instance"]
+apigee_environments = [
+  {
+    name               = "dev"
+    hostnames          = ["dev.apigee.trygoo.gl"]
+    env_type           = "COMPREHENSIVE"
+    attached_instances = ["europe-west1-instance"]
+    key_value_maps     = ["credentials"]
   },
   {
     name               = "prod"
     hostnames          = ["prod.apigee.trygoo.gl"]
     attached_instances = ["europe-west1-instance"]
-    #env_type = "COMPREHENSIVE"
+    env_type           = "BASIC"
   }
 ]
+
+apigee_target_servers = [{
+  name            = "random-int-api"
+  host            = "random-int-api-390089126336.europe-west3.run.app"
+  protocol        = "HTTPS"
+  apigee_env_name = "dev"
+}]

@@ -43,12 +43,18 @@ module "load_balancer" {
 }
 
 module "dns" {
-  source = "./modules/dns"
+  source             = "./modules/dns"
   apigee_dns_records = module.load_balancer.apigee_lb_ips
 
 }
 
-module "psc_endpoint_apigee" {
+module "apigee_target_server" {
+  source                = "./modules/apigee_target_server"
+  apigee_target_servers = var.apigee_target_servers
+  apigee_env_map        = module.apigee.apigee_env_ids
+}
+
+/* module "psc_endpoint_apigee" {
 
   source = "./modules/apigee_psc_endpoint"
 
@@ -57,11 +63,11 @@ module "psc_endpoint_apigee" {
   apigee_instance_region        = var.gcp_target_region
   apigee_endpoint_attachment_id = "gke-cluster-test"
   apigee_network_id             = module.vpc.apigee_vpc
-  dns_name                      = "marius.de."
+  dns_name                      = "marius.service."
   dns_records                   = ["*"]
   psc_attachment_network        = "sandbox-network"
   psc_subnet_cidr_range         = "10.250.0.0/28"
-  psc_attachment_target         = "europe-west1/backendServices/a1a2e4149c4f14a59823f0fcc387d15f"
+  psc_attachment_target         = "europe-west1/backendServices/a4de1854ae6344481ac165c8b56589bd"
   psc_attachment_project        = "cw-marius-sandbox"
   psc_attachment_target_region  = "europe-west1"
-}
+} */

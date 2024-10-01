@@ -7,3 +7,7 @@ output "apigee_service_attachment" {
 output "apigee_org_id" {
   value = google_apigee_organization.apigee_org.id
 }
+
+output "apigee_env_ids" {
+  value = { for env in var.apigee_environments : env.name => google_apigee_environment.apigee_env[env.name].id }
+}

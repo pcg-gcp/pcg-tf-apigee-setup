@@ -34,3 +34,17 @@ resource "google_apigee_envgroup_attachment" "apigee_envgroup" {
   envgroup_id = google_apigee_envgroup.apigee_env_group[each.key].id
   environment = google_apigee_environment.apigee_env[each.key].name
 }
+
+resource "google_apigee_environment_keyvaluemaps" "kvm" {
+  for_each = local.apigee_env_key_value_maps
+
+  env_id = google_apigee_environment.apigee_env[each.value.env].id
+  name = each.value.kvm
+
+}
+
+resource "google_apigee_env_keystore" "apigee_keystore" {
+  for_each = local.apigee_env_keystores
+  env_id   = google_apigee_environment.apigee_env[each.value.env].id
+  name     = each.value.keystore_name
+}

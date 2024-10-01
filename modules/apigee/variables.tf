@@ -29,6 +29,8 @@ variable "apigee_environments" {
     api_proxy_type     = optional(string)
     env_type           = optional(string, "COMPREHENSIVE")
     attached_instances = list(string)
+    key_value_maps     = optional(list(string))
+    keystores          = optional(list(string))
   }))
 }
 
