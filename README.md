@@ -18,6 +18,7 @@ No providers.
 | <a name="module_dev_random_int_api_key"></a> [dev\_random\_int\_api\_key](#module\_dev\_random\_int\_api\_key) | ./modules/apigee_kvm_entry | n/a |
 | <a name="module_dns"></a> [dns](#module\_dns) | ./modules/dns | n/a |
 | <a name="module_gcp_apis"></a> [gcp\_apis](#module\_gcp\_apis) | ./modules/gcp_apis | n/a |
+| <a name="module_github_wif"></a> [github\_wif](#module\_github\_wif) | ./modules/github_wif | n/a |
 | <a name="module_load_balancer"></a> [load\_balancer](#module\_load\_balancer) | ./modules/load_balancer | n/a |
 | <a name="module_vpc"></a> [vpc](#module\_vpc) | ./modules/vpc | n/a |
 
