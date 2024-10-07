@@ -4,7 +4,7 @@ variable "gcp_project_id" {
 
 variable "gcp_target_region" {
   type    = string
-  default = "europe-west3"
+  default = "europe-west1"
 }
 
 variable "apigee_analytics_region" {
@@ -23,10 +23,22 @@ variable "apigee_org_retention" {
 
 variable "apigee_environments" {
   type = list(object({
-    name       = string
+    name               = string
+    description        = optional(string)
+    hostnames          = list(string)
+    api_proxy_type     = optional(string)
+    env_type           = optional(string, "COMPREHENSIVE")
+    attached_instances = list(string)
+    key_value_maps     = optional(list(string))
+    keystores          = optional(list(string))
+  }))
+}
+
+variable "apigee_instances" {
+  type = list(object({
+    name       = optional(string)
+    location   = string
     cidr_range = string
-    hostnames  = list(string)
-    env_type   = optional(string, "COMPREHENSIVE")
   }))
 }
 
@@ -47,17 +59,4 @@ variable "apigee_runtimedb_kms_key_id" {
 
 variable "apigee_vpc_id" {
   type = string
-}
-
-variable "apigee_peering_ranges" {
-  type = map(object({
-    name       = string
-    cidr_range = string
-  }))
-}
-
-variable "support_ranges" {
-  type = map(object({
-    support_range = string
-  }))
 }
